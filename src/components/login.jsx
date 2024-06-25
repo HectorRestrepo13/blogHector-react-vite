@@ -6,18 +6,20 @@ const DisenoLogin = ({ func_recibirDatos }) => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
+    const [barraCarga, setBarraCarga] = useState(false);
 
 
     // funcion para iniciar Sesion
     const func_InciarSesion = async () => {
         try {
             if (email != "" && password != "") {
+                setBarraCarga(true);
                 let respuesta = await fetch(`https://proyectoblog.onrender.com/usuario/iniciarSesion/?correo=${email}&contra=${password}`);
                 if (!respuesta.ok) {
                     throw new Error("Hubo un error al enviar los datos al http Revisar " + respuesta.status)
                 }
                 respuesta = await respuesta.json();
+                setBarraCarga(false);
                 console.log(respuesta);
             }
             else {
@@ -81,7 +83,8 @@ const DisenoLogin = ({ func_recibirDatos }) => {
                                                 </div>
 
                                                 <div className="pt-1 mb-4">
-                                                    <button onClick={func_InciarSesion} className="btn btn-dark btn-lg btn-block" type="button">Iniciar Sesion</button>
+                                                    <button disabled={barraCarga} onClick={func_InciarSesion} className="btn btn-dark btn-lg btn-block" type="button"> {barraCarga ? (<> <span className="spinner-grow spinner-grow-sm" aria-hidden="true"></span>Iniciar Sesion </>) : ('Iniciar Sesion')}  </button>
+
                                                 </div>
 
                                                 <a className="small text-muted" href="#!">Se te olvido la Contraseña?</a>
