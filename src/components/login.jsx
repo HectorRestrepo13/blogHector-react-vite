@@ -20,7 +20,36 @@ const DisenoLogin = ({ func_recibirDatos }) => {
                 }
                 respuesta = await respuesta.json();
                 setBarraCarga(false);
-                console.log(respuesta);
+
+                if (respuesta.status == true) {
+
+                    func_recibirDatos(respuesta);
+                }
+                else {
+
+
+
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        }
+                    });
+                    Toast.fire({
+                        icon: "error",
+                        title: respuesta.descripcion
+                    });
+
+                }
+
+
+
+
             }
             else {
 
