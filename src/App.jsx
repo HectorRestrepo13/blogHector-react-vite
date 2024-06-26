@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import DisenoLogin from './components/login';
-import DueñoBlog from './components/dueñoBlog';
+import DueñoBlog from './components/dueñoBlog/indexDueñoBlog';
 import Swal from 'sweetalert2';
 
 function App() {
 
   // eventos
-  const [redirigirPagina, setRedirigirPagina] = useState("login"); // este es para saber que pagina va llamar
+  const [redirigirPagina, setRedirigirPagina] = useState("dueñoBlog"); // este es para saber que pagina va llamar
   const [datosUsuario, setDatosUsuario] = useState({});
   let componenteARenderizar;
 
