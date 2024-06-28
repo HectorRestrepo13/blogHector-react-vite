@@ -1,6 +1,6 @@
 body {
-  margin-top: 20px;
-  background: #f3f3f3;
+  background: rgb(217, 216, 222);
+  font-family: "Times New Roman", Times, serif;
 }
 /*
 Timeline
@@ -17,11 +17,11 @@ Timeline
   content: "";
   top: 0;
   bottom: 0;
-  left: 303px;
+  left: 160px;
   right: auto;
   height: 100%;
   width: 3px;
-  background: #3498db;
+  background: rgb(96, 30, 18);
   z-index: 0;
 
   -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2),
@@ -34,11 +34,19 @@ Timeline
   content: "";
   width: 3px;
   height: 40px;
-  background: #3498db;
-  background: -webkit-linear-gradient(top, #4782d3, rgba(52, 152, 219, 0));
-  background: linear-gradient(to bottom, #4782d3, rgba(52, 152, 219, 0));
+  background: rgb(96, 30, 18);
+  background: -webkit-linear-gradient(
+    top,
+    rgb(96, 30, 18),
+    rgba(52, 152, 219, 0)
+  );
+  background: linear-gradient(
+    to bottom,
+    rgb(96, 30, 18),
+    rgba(52, 152, 219, 0)
+  );
   top: 100%;
-  left: 303px;
+  left: 160px;
 
   -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2),
     0 6px 10px 0 rgba(0, 0, 0, 0.3);
@@ -46,11 +54,15 @@ Timeline
 }
 
 .vtimeline-content {
-  margin-left: 350px;
-  background: #fff;
-  border: 1px solid #e6e6e6;
+  margin-left: 230px;
+}
+.datosEntrada {
+  width: 100%;
+
+  background: rgb(17, 33, 22);
+  border: 1px solid rgb(17, 33, 22);
   padding: 35px 20px;
-  border-radius: 3px;
+  border-radius: 40px;
   text-align: left;
 
   -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2),
@@ -60,6 +72,8 @@ Timeline
 
 .vtimeline-content h3 {
   font-size: 1.5em;
+  font-family: "Courier New", Courier, monospace;
+  color: #d6d2a3;
   font-weight: 600;
   display: inline-block;
   margin: 0;
@@ -67,7 +81,28 @@ Timeline
 
 .vtimeline-content p {
   font-size: 0.9em;
+  color: #d9d8de;
   margin: 0;
+}
+.list-inline-item a {
+  color: #b33600;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+  font-size: 1.1rem;
+}
+.list-inline-item a:hover {
+  color: #d9d8de;
+  text-decoration: underline;
+  transform: scale(3.5);
+}
+.fa-calendar-o {
+  color: #b33600;
+}
+.fa-tags {
+  color: #b33600;
+}
+.img-fluid {
+  border-radius: 25px;
 }
 
 .vtimeline-point {
@@ -82,13 +117,13 @@ Timeline
   color: #fff;
   width: 50px;
   height: 50px;
-  background: #4782d3;
+  background: rgb(96, 30, 18);
   border-radius: 50%;
   float: left;
   text-align: center;
   line-height: 50px;
   z-index: 99;
-  margin-left: 280px;
+  margin-left: 138px;
 }
 
 .vtimeline-icon i {
@@ -98,7 +133,7 @@ Timeline
 }
 
 .vtimeline-date {
-  width: 260px;
+  width: 130px;
   text-align: right;
   position: absolute;
   left: 0;
@@ -124,4 +159,39 @@ h3 {
 }
 .mb20 {
   margin-bottom: 20px !important;
+}
+
+/*  ACA VA IR EL STYLE DEL COL-1 */
+
+.btnRedactar {
+  position: fixed; /* Fijar el contenedor en su posición */
+  top: 80%; /* Ajusta según tu necesidad */
+  right: 85%; /* Ajusta según tu necesidad */
+}
+
+.btnRedactar button {
+  background-color: transparent;
+  color: #b33600;
+  border: none;
+  width: 100%;
+  height: 110px;
+  transition: transform 0.3s ease; /* Agregar transición suave */
+}
+
+.btnRedactar button:hover {
+  background-color: transparent;
+  color: #b33600;
+  border: none;
+  width: 100%;
+  height: 110px;
+  transform: scale(1.05); /* Agrandar un poco */
+}
+
+/* Media query para cambiar propiedades después de un cierto tamaño de pantalla */
+@media (max-width: 768px) {
+  .btnRedactar {
+    position: fixed; /* Fijar el contenedor en su posición */
+    top: 80%; /* Ajusta según tu necesidad */
+    right: 70%; /* Ajusta según tu necesidad */
+  }
 }

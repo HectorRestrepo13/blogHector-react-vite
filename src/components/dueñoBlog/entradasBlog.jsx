@@ -49,26 +49,30 @@ const EntradasBlog = () => {
                         return (
                             <div className="vtimeline-point" key={entrada.id}>
                                 <div className="vtimeline-icon">
-                                    <i className="fa fa-image"></i>
+                                    {/* <i className="fa fa-image"></i> */}
+                                    <img style={{ height: "32px", width: "30px", marginTop: "8px" }} src={entrada.UrlImagenUsuario} alt={entrada.NombreUsuario} className="img-fluid mb20" />
                                 </div>
                                 <div className="vtimeline-block">
                                     <span className="vtimeline-date">{fechaFormateada}</span>
                                     <div className="vtimeline-content">
-                                        <a href="#"><img src="https://via.placeholder.com/700x400" alt="" className="img-fluid mb20" /></a>
-                                        <a href="#"><h3>{entrada.TituloEntrada}</h3></a>
-                                        <ul className="post-meta list-inline">
-                                            <li className="list-inline-item">
-                                                <i className="fa fa-user-circle-o"></i> <a href="#">{entrada.blog.Usuario.NombreUsuario} {entrada.blog.Usuario.ApellidoUsuario}</a>
-                                            </li>
-                                            <li className="list-inline-item">
-                                                <i className="fa fa-calendar-o"></i> <a href="#">{fechaFormateada}</a>
-                                            </li>
-                                            <li className="list-inline-item">
-                                                <i className="fa fa-tags"></i> <a href="#">Bootstrap4</a>
-                                            </li>
-                                        </ul>
-                                        <p>{entrada.ContenidoEntrada}</p><br />
-                                        <a href="#" className="btn btn-outline-secondary btn-sm">Leer Más</a>
+                                        <div className="datosEntrada">
+                                            <a href="#"><img style={{ height: "300px", width: "100%" }} src={entrada.UrlImagenEntrada} alt={entrada.TituloEntrada} className="img-fluid mb20" /></a>
+                                            <a href="#"><h3>{entrada.TituloEntrada}</h3></a>
+                                            <ul className="post-meta list-inline">
+                                                <li className="list-inline-item">
+                                                    <i className="fa fa-user-circle-o"></i> <a href="#">{entrada.NombreUsuario} {entrada.ApellidoUsuario}</a>
+                                                </li>
+                                                <li className="list-inline-item">
+                                                    <i className="fa fa-calendar-o"></i> <a href="#">{fechaFormateada}</a>
+                                                </li>
+                                                <li className="list-inline-item">
+                                                    <i className="fa fa-tags"></i> <a href="#">Blog</a>
+                                                </li>
+                                            </ul>
+                                            <p>{entrada.ContenidoEntrada}</p><br />
+                                            <a href="#" className="btn btn-outline-secondary btn-sm">Comentar</a>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
