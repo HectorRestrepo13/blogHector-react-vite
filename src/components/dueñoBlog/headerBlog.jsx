@@ -1,7 +1,7 @@
 import './css/styleHeaderBlog.css'
 
 
-const HeaderBlog = () => {
+const HeaderBlog = ({ imagenPerfil }) => {
     return (
         <>
             <header className="bg-dark text-white py-3">
@@ -24,7 +24,7 @@ const HeaderBlog = () => {
                                 <div className="btn-group">
 
                                     <button type="button" className="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <img src="../../public/logoBlog.png" alt="Logo" width="50" height="50" className="me-2" />
+                                        <img src={imagenPerfil} alt="Logo" width="80" height="60" className="me-2" />
                                     </button>
                                     <ul className="dropdown-menu">
                                         <li><a className="dropdown-item" href="#">Ver Perfil</a></li>

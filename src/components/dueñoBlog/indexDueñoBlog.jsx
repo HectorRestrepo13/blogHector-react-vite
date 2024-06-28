@@ -1,13 +1,14 @@
 import React from 'react';
 import EntradasBlog from './entradasBlog';
 import HeaderBlog from './headerBlog';
-const DueñoBlog = () => {
+const DueñoBlog = ({ datosUsuario }) => {
+    console.log(datosUsuario)
     return (
         <>
             <div className="container-fluid">
                 <div className="row">
                     <div style={{ padding: "0px" }} className="col">
-                        <HeaderBlog></HeaderBlog>
+                        <HeaderBlog imagenPerfil={datosUsuario.descripcion.ImagenUsuario}></HeaderBlog>
                     </div>
                 </div>
             </div>

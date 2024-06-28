@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
 
-const DisenoLogin = ({ func_recibirDatos }) => {
+const DisenoLogin = ({ func_recibirDatos, setDatosUsuario }) => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -22,7 +22,7 @@ const DisenoLogin = ({ func_recibirDatos }) => {
                 setBarraCarga(false);
 
                 if (respuesta.status == true) {
-
+                    setDatosUsuario(respuesta)
                     func_recibirDatos(respuesta);
                 }
                 else {

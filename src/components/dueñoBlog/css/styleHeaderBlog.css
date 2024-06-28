@@ -30,3 +30,6 @@ header {
 .perfilUsuario {
   margin-left: auto;
 }
+.perfilUsuario img {
+  border-radius: 70px;
+}

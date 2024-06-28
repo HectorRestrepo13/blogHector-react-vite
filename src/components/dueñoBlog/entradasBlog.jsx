@@ -49,8 +49,8 @@ const EntradasBlog = () => {
                         return (
                             <div className="vtimeline-point" key={entrada.id}>
                                 <div className="vtimeline-icon">
-                                    {/* <i className="fa fa-image"></i> */}
-                                    <img style={{ height: "32px", width: "30px", marginTop: "8px" }} src={entrada.UrlImagenUsuario} alt={entrada.NombreUsuario} className="img-fluid mb20" />
+                                    <i className="fa fa-image"></i>
+                                    {/* <img style={{ height: "32px", width: "30px", marginTop: "8px" }} src={entrada.UrlImagenUsuario} alt={entrada.NombreUsuario} className="img-fluid mb20" /> */}
                                 </div>
                                 <div className="vtimeline-block">
                                     <span className="vtimeline-date">{fechaFormateada}</span>
