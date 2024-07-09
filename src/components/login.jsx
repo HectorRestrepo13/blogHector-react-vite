@@ -1,12 +1,14 @@
 
 import { useState } from "react";
+import { json, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const DisenoLogin = ({ func_recibirDatos, setDatosUsuario }) => {
+const DisenoLogin = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [barraCarga, setBarraCarga] = useState(false);
+    const navigate = useNavigate();
 
 
     // funcion para iniciar Sesion
@@ -22,8 +24,11 @@ const DisenoLogin = ({ func_recibirDatos, setDatosUsuario }) => {
                 setBarraCarga(false);
 
                 if (respuesta.status == true) {
-                    setDatosUsuario(respuesta)
-                    func_recibirDatos(respuesta);
+
+                    // ACA VOY A METER LOS DATOS EN EL LOCALSTORE Y DIRIJIRLO A OTRA PAGINA
+                    let local = window.localStorage;
+                    local.setItem("usuario", JSON.stringify(respuesta));
+                    navigate('/dueñoBlog')
                 }
                 else {
 

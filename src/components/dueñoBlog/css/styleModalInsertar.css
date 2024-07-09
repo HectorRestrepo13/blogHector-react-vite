@@ -1,0 +1,33 @@
+.file-input-wrapper {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+
+.file-input-wrapper input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.file-input-wrapper img {
+  display: block;
+  max-width: 200px; /* Ajusta el tamaño de la imagen según sea necesario */
+  cursor: pointer;
+  border-radius: 25px;
+}
+
+.colImagenEntrada {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.conten {
+  background-color: rgb(96, 30, 18);
+}
