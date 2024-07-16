@@ -29,5 +29,24 @@
 }
 
 .conten {
-  background-color: rgb(96, 30, 18);
+  background-color: rgb(17, 33, 22);
 }
+.tipoLetra h1 {
+  font-family: "Times New Roman", Times, serif;
+}
+.tipoLetra {
+  font-family: "Times New Roman", Times, serif;
+}
+
+.descripcionImagen p {
+  color: #d9d8de;
+  font-size: 22px;
+  font-family: "Times New Roman", Times, serif;
+}
+/* 
+.form-floating ::after {
+  background-color: transparent;
+
+  color: transparent;
+  border: solid 2px black;
+} */
