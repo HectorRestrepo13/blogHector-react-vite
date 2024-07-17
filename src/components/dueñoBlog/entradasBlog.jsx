@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import './css/styleEntradas.css'
+
+
 
 const EntradasBlog = () => {
     const [jsonDatosEntradas, setJsonDatosEntradas] = useState([]);
@@ -70,12 +73,52 @@ const EntradasBlog = () => {
                                                 </li>
                                             </ul>
                                             <p>{entrada.ContenidoEntrada}</p><br />
-                                            <a href="#" className="btn btn-outline-secondary btn-sm">Comentar</a>
+                                            <button className="btnPublicar">Comentar</button>
                                         </div>
 
                                     </div>
                                 </div>
+                                {/* ACA VOY A COLOCAR EL DISEÑO DONDE VAN A IR LOS COMENTARIOS */}
+                                <div className="vtimeline-point" key={entrada.id}>
+
+                                    <div className="vtimeline-block">
+                                        <div className="vtimeline-content">
+                                            <div className="datosEntrada">
+                                                {/* aca van a ir los comentarios */}
+                                                <div className="container">
+                                                    <div className="row">
+                                                        <div className="col">
+                                                            <div className="contenedorComentarios">
+                                                                <div className="contendorBotonCerrar">
+                                                                    <a href="#" className="btn btn-outline-secondary btn-sm">Cerrar</a>
+
+                                                                </div>
+                                                                <div className="contenedorInput">
+                                                                    <div className="mb-3">
+                                                                        <div className="input-group">
+                                                                            <span className="input-group-text textoInput" id="basic-addon3">Nuevo</span>
+                                                                            <input placeholder='Escribir Comentario' type="text" className="form-control inputComentar" id="basic-url" aria-describedby="basic-addon3 basic-addon4" />
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="btnPublicarComentario">
+                                                                        <button className='btnPublicar' >Publicar</button>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+
+
                         );
                     })
                 ) : (

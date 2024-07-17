@@ -1,0 +1,43 @@
+.contenedorComentarios {
+  display: flex;
+}
+.contenedorInput {
+  margin-left: auto;
+  display: flex;
+}
+.btnPublicarComentario {
+  margin-left: 5px;
+}
+.btnPublicar {
+  border-radius: 5px;
+  color: #d9d8de;
+  background-color: transparent;
+  font-family: "Times New Roman", Times, serif;
+  height: 35px;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+.btnPublicar:hover {
+  background-color: #d9d8de;
+  color: black;
+  transform: scale(1.1); /* Aumenta el tamaño al 110% */
+  font-family: "Times New Roman", Times, serif;
+}
+
+.textoInput {
+  background-color: transparent;
+  color: #d9d8de;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.inputComentar {
+  background-color: transparent;
+}
+.inputComentar:focus {
+  background-color: #1d1d1d;
+  color: #d9d8de;
+}
+
+.inputComentar::placeholder {
+  color: #d9d8de;
+  font-family: "Times New Roman", Times, serif;
+}
