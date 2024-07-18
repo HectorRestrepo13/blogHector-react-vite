@@ -41,3 +41,21 @@
   color: #d9d8de;
   font-family: "Times New Roman", Times, serif;
 }
+.infoPerfil {
+  display: flex;
+}
+
+.contenedorNombrePerfil {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.contenedorCarga {
+  display: flex;
+  justify-content: center;
+}
+
+.formularioPublicacion {
+  margin-left: auto;
+}

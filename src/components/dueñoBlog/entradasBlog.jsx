@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './css/styleEntradas.css'
+import DisenoComentarios from './disenoComentarios';
 
 
 
 const EntradasBlog = () => {
     const [jsonDatosEntradas, setJsonDatosEntradas] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [mostrarComentarios, setMostrarComentarios] = useState(null);
 
     // USO DEL "useEffect" PARA QUE SE EJECUTE UNA VEZ SE CARGUE LA PAGINA 
     useEffect(() => {
@@ -41,6 +43,22 @@ const EntradasBlog = () => {
         return <p>Cargando entradas...</p>;
     }
 
+
+    // FUNCION PARA PONER EL ID EN USEsTATE PARA MOSTRAR LOS COMENTARIOS
+
+    const func_mostrarComentarios = (idEntrada) => {
+        if (mostrarComentarios == null) {
+            setMostrarComentarios(idEntrada)
+
+        }
+        else {
+            setMostrarComentarios(null)
+
+        }
+    }
+
+    // -- FIN FUNCION --
+
     return (
         <>
             {loading ? (
@@ -59,7 +77,7 @@ const EntradasBlog = () => {
                                     <span className="vtimeline-date">{fechaFormateada}</span>
                                     <div className="vtimeline-content">
                                         <div className="datosEntrada">
-                                            <a href="#"><img style={{ height: "300px", width: "100%" }} src={entrada.UrlImagenEntrada} alt={entrada.TituloEntrada} className="img-fluid mb20" /></a>
+                                            <a href="#"><img style={{ height: "300px", width: "100%" }} src={entrada.UrlImagenEntrada != null ? entrada.UrlImagenEntrada : "sinFoto.jpg"} alt={entrada.TituloEntrada} className="img-fluid mb20" /></a>
                                             <a href="#"><h3>{entrada.TituloEntrada}</h3></a>
                                             <ul className="post-meta list-inline">
                                                 <li className="list-inline-item">
@@ -73,49 +91,17 @@ const EntradasBlog = () => {
                                                 </li>
                                             </ul>
                                             <p>{entrada.ContenidoEntrada}</p><br />
-                                            <button className="btnPublicar">Comentar</button>
+                                            <button onClick={func_mostrarComentarios.bind(this, entrada.id)} className="btnPublicar">Comentar</button>
                                         </div>
 
                                     </div>
                                 </div>
                                 {/* ACA VOY A COLOCAR EL DISEÑO DONDE VAN A IR LOS COMENTARIOS */}
-                                <div className="vtimeline-point" key={entrada.id}>
 
-                                    <div className="vtimeline-block">
-                                        <div className="vtimeline-content">
-                                            <div className="datosEntrada">
-                                                {/* aca van a ir los comentarios */}
-                                                <div className="container">
-                                                    <div className="row">
-                                                        <div className="col">
-                                                            <div className="contenedorComentarios">
-                                                                <div className="contendorBotonCerrar">
-                                                                    <a href="#" className="btn btn-outline-secondary btn-sm">Cerrar</a>
+                                {
+                                    mostrarComentarios == entrada.id ? (<DisenoComentarios idEntrada={entrada.id} func_mostrarComentarios={func_mostrarComentarios}></DisenoComentarios>) : (<></>)
+                                }
 
-                                                                </div>
-                                                                <div className="contenedorInput">
-                                                                    <div className="mb-3">
-                                                                        <div className="input-group">
-                                                                            <span className="input-group-text textoInput" id="basic-addon3">Nuevo</span>
-                                                                            <input placeholder='Escribir Comentario' type="text" className="form-control inputComentar" id="basic-url" aria-describedby="basic-addon3 basic-addon4" />
-
-                                                                        </div>
-                                                                    </div>
-                                                                    <div className="btnPublicarComentario">
-                                                                        <button className='btnPublicar' >Publicar</button>
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
 
 
