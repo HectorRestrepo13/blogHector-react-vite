@@ -35,13 +35,57 @@ const DisenoComentarios = ({ idEntrada, func_mostrarComentarios }) => {
 
     // -- FIN FUNCION --
 
+    // Función para agregar un cero delante si el valor es menor que 10
+    function agregarCero(valor) {
+        return valor < 10 ? '0' + valor : valor;
+    }
+
+
     // FUNCION PARA INSERTAR UN COMENTARIO NUEVO
 
-    const func_insertarComentario = (e) => {
+    const func_insertarComentario = async (e) => {
         e.preventDefault(); // para evitar la recarga automatica del form
         try {
             let textoComentario = e.target.textoComentario.value;
+
             if (textoComentario != "") {
+                const idEntrada = e.target.datoAdicional.value;
+
+                let fechaActual = new Date();
+                // Formatear la fecha en el formato AAAA-MM-DD
+                const año = fechaActual.getFullYear();
+                const mes = agregarCero(fechaActual.getMonth() + 1); // Los meses son de 0 a 11, por lo que se agrega 1
+                const día = agregarCero(fechaActual.getDate());
+
+                fechaActual = `${año}-${mes}-${día}`;
+
+                // obtengo la cedula del usuario desde el local Store
+                let local = window.localStorage;
+                let cedulaUsuario = JSON.parse(local.getItem("usuario"))
+                cedulaUsuario = cedulaUsuario.descripcion.CedulaUsuario;
+
+                let jsonDatos = {
+                    DescripcionComentario: textoComentario,
+                    FechaComentario: fechaActual,
+                    UsuarioCedulaUsuario: cedulaUsuario,
+                    EntradaId: idEntrada
+                }
+
+                let insertarComentario = await fetch("https://proyectoblog.onrender.com/comentarios/insertarComentario/", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json', // Tipo de contenido
+                    },
+                    body: JSON.stringify(jsonDatos)
+                })
+
+                if (!insertarComentario.ok) {
+                    throw new Error(`Hubo un error al Consumir la API de insertar el comentario!!  ERROR: ${insertarComentario.status}`);
+                }
+
+                let jsonInsertacionComentario = await insertarComentario.json();
+                console.log(jsonInsertacionComentario);
+
 
             }
             else {
@@ -95,7 +139,7 @@ const DisenoComentarios = ({ idEntrada, func_mostrarComentarios }) => {
                                     <div className="row">
                                         <div className="col">
                                             <div className="contenedorSinComentarios">
-                                                <div class="alert alert-danger" role="alert">
+                                                <div className="alert alert-danger" role="alert">
                                                     <h2>Error: {error}</h2>
                                                 </div>
                                             </div>
@@ -126,26 +170,26 @@ const DisenoComentarios = ({ idEntrada, func_mostrarComentarios }) => {
                                     <div className="row">
                                         <div className="col">
                                             <div className="contenedorCarga">
-                                                <div class="spinner-grow text-primary" role="status">
-                                                    <span class="visually-hidden">Loading...</span>
+                                                <div className="spinner-grow text-primary" role="status">
+                                                    <span className="visually-hidden">Loading...</span>
                                                 </div>
-                                                <div class="spinner-grow text-secondary" role="status">
-                                                    <span class="visually-hidden">Loading...</span>
+                                                <div className="spinner-grow text-secondary" role="status">
+                                                    <span className="visually-hidden">Loading...</span>
                                                 </div>
-                                                <div class="spinner-grow text-success" role="status">
-                                                    <span class="visually-hidden">Loading...</span>
+                                                <div className="spinner-grow text-success" role="status">
+                                                    <span className="visually-hidden">Loading...</span>
                                                 </div>
-                                                <div class="spinner-grow text-danger" role="status">
-                                                    <span class="visually-hidden">Loading...</span>
+                                                <div className="spinner-grow text-danger" role="status">
+                                                    <span className="visually-hidden">Loading...</span>
                                                 </div>
-                                                <div class="spinner-grow text-warning" role="status">
-                                                    <span class="visually-hidden">Loading...</span>
+                                                <div className="spinner-grow text-warning" role="status">
+                                                    <span className="visually-hidden">Loading...</span>
                                                 </div>
-                                                <div class="spinner-grow text-info" role="status">
-                                                    <span class="visually-hidden">Loading...</span>
+                                                <div className="spinner-grow text-info" role="status">
+                                                    <span className="visually-hidden">Loading...</span>
                                                 </div>
-                                                <div class="spinner-grow text-light" role="status">
-                                                    <span class="visually-hidden">Loading...</span>
+                                                <div className="spinner-grow text-light" role="status">
+                                                    <span className="visually-hidden">Loading...</span>
                                                 </div>
                                             </div>
 
@@ -175,7 +219,7 @@ const DisenoComentarios = ({ idEntrada, func_mostrarComentarios }) => {
                                     <div className="row">
                                         <div className="col">
                                             <div className="contenedorSinComentarios">
-                                                <div style={{ backgroundColor: "transparent", color: "white", display: "flex", justifyContent: "center" }} class="alert alert-secondary" role="alert">
+                                                <div style={{ backgroundColor: "transparent", color: "white", display: "flex", justifyContent: "center" }} className="alert alert-secondary" role="alert">
                                                     Esta Entrada no Tiene Comentarios!
                                                 </div>
                                             </div>
@@ -199,6 +243,8 @@ const DisenoComentarios = ({ idEntrada, func_mostrarComentarios }) => {
 
                                                             </div>
                                                         </div>
+                                                        <input type="hidden" id="datoAdicional" value={idEntrada} />
+
                                                         <div className="btnPublicarComentario">
                                                             <button type='submit' className='btnPublicar' >Publicar</button>
 
@@ -271,6 +317,8 @@ const DisenoComentarios = ({ idEntrada, func_mostrarComentarios }) => {
 
                                                         </div>
                                                     </div>
+                                                    <input type="hidden" id="datoAdicional" value={idEntrada} />
+
                                                     <div className="btnPublicarComentario">
                                                         <button type='submit' className='btnPublicar' >Publicar</button>
 
