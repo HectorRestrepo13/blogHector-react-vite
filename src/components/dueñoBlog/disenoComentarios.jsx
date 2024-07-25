@@ -6,6 +6,7 @@ const DisenoComentarios = ({ idEntrada, func_mostrarComentarios }) => {
 
 
     let [jsonComentarios, setJsonComentarios] = useState(null);
+    let [insertacionComentario, setInsertacionComentario] = useState(null)
     const [error, setError] = useState(null);
 
     //  FUNCION DONDE VOY A CONSUMIR LA API PARA TRAER LOS DATOS DE LOS COMENTARIOS
@@ -14,7 +15,7 @@ const DisenoComentarios = ({ idEntrada, func_mostrarComentarios }) => {
         try {
 
 
-            let comentariosApi = await fetch(`https://proyectoblog.onrender.com/comentarios/selecionarComentarios/1`);
+            let comentariosApi = await fetch(`https://proyectoblog.onrender.com/comentarios/selecionarComentarios/${idEntrada}`);
 
             if (!comentariosApi.ok) {
                 throw new Error(`Hubo un error al Consumir la APi de los comentarios Verificar: ${comentariosApi.status}`)
@@ -70,7 +71,7 @@ const DisenoComentarios = ({ idEntrada, func_mostrarComentarios }) => {
                     UsuarioCedulaUsuario: cedulaUsuario,
                     EntradaId: idEntrada
                 }
-
+                setInsertacionComentario("procesando insertacion")
                 let insertarComentario = await fetch("https://proyectoblog.onrender.com/comentarios/insertarComentario/", {
                     method: "POST",
                     headers: {
@@ -84,7 +85,42 @@ const DisenoComentarios = ({ idEntrada, func_mostrarComentarios }) => {
                 }
 
                 let jsonInsertacionComentario = await insertarComentario.json();
+                setInsertacionComentario(null)
                 console.log(jsonInsertacionComentario);
+                if (jsonInsertacionComentario.status == true) {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        }
+                    });
+                    Toast.fire({
+                        icon: "success",
+                        title: jsonInsertacionComentario.descripcion
+                    });
+                }
+                else {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        }
+                    });
+                    Toast.fire({
+                        icon: "error",
+                        title: "Hubo un error mirar la Consola"
+                    });
+                }
 
 
             }
@@ -123,7 +159,7 @@ const DisenoComentarios = ({ idEntrada, func_mostrarComentarios }) => {
     // ESTE ES PARA QUE SE INICIE CADA VEZ QUE SE CAMBIA EL ID DE LA ENTRADA ENTONCES SE EJECUTE LA FUNCION
     useEffect(() => {
         func_traerDatosComentarios();
-    }, [idEntrada]);
+    }, [idEntrada, insertacionComentario]);
 
     // ESTE POR SI HAY UN ERROR 
 
@@ -236,19 +272,48 @@ const DisenoComentarios = ({ idEntrada, func_mostrarComentarios }) => {
                                                 </div>
                                                 <form className='formularioPublicacion' onSubmit={func_insertarComentario}>
                                                     <div className="contenedorInput">
-                                                        <div className="mb-3">
-                                                            <div className="input-group">
-                                                                <span className="input-group-text textoInput" id="basic-addon3">Nuevo</span>
-                                                                <input placeholder='Escribir Comentario' type="text" className="form-control inputComentar" id="textoComentario" aria-describedby="basic-addon3 basic-addon4" />
+                                                        {
+                                                            insertacionComentario == null ? (<>
+                                                                <div className="mb-3">
+                                                                    <div className="input-group">
+                                                                        <span className="input-group-text textoInput" id="basic-addon3">Nuevo</span>
+                                                                        <input placeholder='Escribir Comentario' type="text" className="form-control inputComentar" id="textoComentario" aria-describedby="basic-addon3 basic-addon4" />
 
-                                                            </div>
-                                                        </div>
-                                                        <input type="hidden" id="datoAdicional" value={idEntrada} />
+                                                                    </div>
+                                                                </div>
+                                                                <input type="hidden" id="datoAdicional" value={idEntrada} />
 
-                                                        <div className="btnPublicarComentario">
-                                                            <button type='submit' className='btnPublicar' >Publicar</button>
+                                                                <div className="btnPublicarComentario">
+                                                                    <button type='submit' className='btnPublicar' >Publicar</button>
 
-                                                        </div>
+                                                                </div>
+
+                                                            </>) : (<>
+
+                                                                <div className="spinner-grow text-primary" role="status">
+                                                                    <span className="visually-hidden">Loading...</span>
+                                                                </div>
+                                                                <div className="spinner-grow text-secondary" role="status">
+                                                                    <span className="visually-hidden">Loading...</span>
+                                                                </div>
+                                                                <div className="spinner-grow text-success" role="status">
+                                                                    <span className="visually-hidden">Loading...</span>
+                                                                </div>
+                                                                <div className="spinner-grow text-danger" role="status">
+                                                                    <span className="visually-hidden">Loading...</span>
+                                                                </div>
+                                                                <div className="spinner-grow text-warning" role="status">
+                                                                    <span className="visually-hidden">Loading...</span>
+                                                                </div>
+                                                                <div className="spinner-grow text-info" role="status">
+                                                                    <span className="visually-hidden">Loading...</span>
+                                                                </div>
+                                                                <div className="spinner-grow text-light" role="status">
+                                                                    <span className="visually-hidden">Loading...</span>
+                                                                </div>
+                                                            </>)
+                                                        }
+
                                                     </div>
                                                 </form>
                                             </div>
@@ -310,19 +375,47 @@ const DisenoComentarios = ({ idEntrada, func_mostrarComentarios }) => {
                                             </div>
                                             <form className='formularioPublicacion' onSubmit={func_insertarComentario}>
                                                 <div className="contenedorInput">
-                                                    <div className="mb-3">
-                                                        <div className="input-group">
-                                                            <span className="input-group-text textoInput" id="basic-addon3">Nuevo</span>
-                                                            <input placeholder='Escribir Comentario' type="text" className="form-control inputComentar" id="textoComentario" aria-describedby="basic-addon3 basic-addon4" />
+                                                    {
+                                                        insertacionComentario == null ? (<>
+                                                            <div className="mb-3">
+                                                                <div className="input-group">
+                                                                    <span className="input-group-text textoInput" id="basic-addon3">Nuevo</span>
+                                                                    <input placeholder='Escribir Comentario' type="text" className="form-control inputComentar" id="textoComentario" aria-describedby="basic-addon3 basic-addon4" />
 
-                                                        </div>
-                                                    </div>
-                                                    <input type="hidden" id="datoAdicional" value={idEntrada} />
+                                                                </div>
+                                                            </div>
+                                                            <input type="hidden" id="datoAdicional" value={idEntrada} />
 
-                                                    <div className="btnPublicarComentario">
-                                                        <button type='submit' className='btnPublicar' >Publicar</button>
+                                                            <div className="btnPublicarComentario">
+                                                                <button type='submit' className='btnPublicar' >Publicar</button>
 
-                                                    </div>
+                                                            </div>
+
+                                                        </>) : (<>
+
+                                                            <div className="spinner-grow text-primary" role="status">
+                                                                <span className="visually-hidden">Loading...</span>
+                                                            </div>
+                                                            <div className="spinner-grow text-secondary" role="status">
+                                                                <span className="visually-hidden">Loading...</span>
+                                                            </div>
+                                                            <div className="spinner-grow text-success" role="status">
+                                                                <span className="visually-hidden">Loading...</span>
+                                                            </div>
+                                                            <div className="spinner-grow text-danger" role="status">
+                                                                <span className="visually-hidden">Loading...</span>
+                                                            </div>
+                                                            <div className="spinner-grow text-warning" role="status">
+                                                                <span className="visually-hidden">Loading...</span>
+                                                            </div>
+                                                            <div className="spinner-grow text-info" role="status">
+                                                                <span className="visually-hidden">Loading...</span>
+                                                            </div>
+                                                            <div className="spinner-grow text-light" role="status">
+                                                                <span className="visually-hidden">Loading...</span>
+                                                            </div>
+                                                        </>)
+                                                    }
                                                 </div>
                                             </form>
                                         </div>

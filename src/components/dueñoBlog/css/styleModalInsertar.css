@@ -50,3 +50,17 @@
   color: transparent;
   border: solid 2px black;
 } */
+
+/* ACA VA ESTAR EL DISEÑO DEL REGISTRO */
+
+.contenedorBotones {
+  display: flex;
+}
+
+.botones {
+  margin-left: 5px;
+}
+.botones button {
+  width: 100%;
+  font-size: 17px;
+}

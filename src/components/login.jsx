@@ -81,6 +81,13 @@ const DisenoLogin = () => {
 
     }
 
+    // FUNCION PARA ENVIAR A LA PAGINA DE REGISTRO
+
+    const func_mandarPaginaRegistro = () => {
+        navigate(`/registroUsuario`)
+    }
+
+    // -- FIN FUNCION --
 
     return (
         <>
@@ -122,7 +129,7 @@ const DisenoLogin = () => {
                                                 </div>
 
                                                 <a className="small text-muted" href="#!">Se te olvido la Contraseña?</a>
-                                                <p className="mb-5 pb-lg-2" style={{ color: '#393f81' }}>No tienes Cuenta? <a href="#!"
+                                                <p className="mb-5 pb-lg-2" style={{ color: '#393f81' }}>No tienes Cuenta? <a onClick={func_mandarPaginaRegistro} href="#!"
                                                     style={{ color: '#393f81' }}>Registrarse ahora</a></p>
 
                                             </form>

@@ -1,4 +1,4 @@
-import { DisenoLogin, DuenoBlogg } from "./pages";
+import { DisenoLogin, DuenoBlogg, RegistroUsuario } from "./pages";
 
 export const routes = [
     {
@@ -8,5 +8,9 @@ export const routes = [
     {
         path: '/dueñoBlog',
         element: <DuenoBlogg />
+    },
+    {
+        path: '/registroUsuario',
+        element: <RegistroUsuario />
     }
 ]
