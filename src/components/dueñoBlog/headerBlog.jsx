@@ -1,10 +1,34 @@
+import { useNavigate } from 'react-router-dom';
 import './css/styleHeaderBlog.css';
+import Swal from 'sweetalert2';
 
 const HeaderBlog = () => {
 
     const localStore = window.localStorage;
     let datosUsuario = JSON.parse(localStore.getItem('usuario'));
     let imagenPerfil = datosUsuario.descripcion.ImagenUsuario;
+
+    let navigate = useNavigate();
+
+    // FUNCION PARA ENVIAR AL LOGIN 
+    const func_EnviarLogin = () => {
+        Swal.fire({
+            title: "Estas Seguro de Cerrar Sesion?",
+            text: "Tendras que volver a Ingresar los datos para iniciar!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                navigate("/")
+
+            }
+        });
+    }
+    // -- FIN FUNCION --
+
 
     console.log(datosUsuario);
     return (
@@ -32,7 +56,7 @@ const HeaderBlog = () => {
                                     <ul className="dropdown-menu">
                                         <li><a className="dropdown-item" href="#">Ver Perfil</a></li>
                                         <li><hr className="dropdown-divider" /></li>
-                                        <li><a className="dropdown-item" href="#">Cerrar Sesión</a></li>
+                                        <li><a onClick={func_EnviarLogin} className="dropdown-item" href="#">Cerrar Sesión</a></li>
                                     </ul>
                                 </div>
                             </div>

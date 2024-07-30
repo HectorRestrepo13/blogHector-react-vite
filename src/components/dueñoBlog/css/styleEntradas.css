@@ -59,3 +59,62 @@
 .formularioPublicacion {
   margin-left: auto;
 }
+
+/* Diseño de los comentarios */
+
+.contenedorBTNEditar {
+  margin-left: auto;
+  margin-right: 10px;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s ease; /* Transición suave */
+}
+
+.contenedorBTNEditar:hover {
+  transform: scale(1.4); /* Zoom al pasar el mouse */
+}
+
+.contenedorBTNBorrar {
+  margin-right: 10px;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s ease; /* Transición suave */
+}
+
+.contenedorBTNBorrar:hover {
+  transform: scale(1.4); /* Zoom al pasar el mouse */
+}
+
+.disenoModal {
+  background-color: #1d1d1d;
+  color: aliceblue;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.btnGuardarCometario {
+  border-radius: 5px;
+  color: #d9d8de;
+  background-color: transparent;
+  font-family: "Times New Roman", Times, serif;
+  height: 35px;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.btnCancelarComentario {
+  border-radius: 5px;
+  color: #d9d8de;
+  background-color: transparent;
+  font-family: "Times New Roman", Times, serif;
+  height: 35px;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.cometarioNuevo {
+  width: 100%;
+  height: 45px;
+  background-color: transparent;
+  color: aliceblue;
+  font-family: "Times New Roman", Times, serif;
+}

@@ -1,6 +1,8 @@
 import './css/styleEntradas.css'
 import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
+import bootstrap from 'bootstrap/dist/js/bootstrap.bundle'
+
 
 const DisenoComentarios = ({ idEntrada, func_mostrarComentarios }) => {
 
@@ -40,6 +42,8 @@ const DisenoComentarios = ({ idEntrada, func_mostrarComentarios }) => {
     function agregarCero(valor) {
         return valor < 10 ? '0' + valor : valor;
     }
+
+
 
 
     // FUNCION PARA INSERTAR UN COMENTARIO NUEVO
@@ -150,6 +154,20 @@ const DisenoComentarios = ({ idEntrada, func_mostrarComentarios }) => {
 
     // -- FIN FUNCION --
 
+
+    // FUNCION PARA EDITAR EL COMENTARIO
+
+    const func_editarComentario = (id, nombre, apellido) => {
+        // enviamos los datos antes de abrir el modal
+        document.getElementById("nombreUsuarioComentario").textContent = `${nombre} ${apellido}`;
+        document.getElementById("inputNuevoComentario").value = "Hola";
+
+
+        var myModal = new bootstrap.Modal(document.getElementById('modalEditar'));
+        myModal.show();
+    }
+
+    // -- FIN FUNCION --
 
 
 
@@ -353,6 +371,18 @@ const DisenoComentarios = ({ idEntrada, func_mostrarComentarios }) => {
                                                     <div className="contenedorNombrePerfil">
                                                         <h5 className="card-title">{datos.Usuario.NombreUsuario}</h5>
                                                     </div>
+                                                    <div className="contenedorBTNEditar">
+                                                        <svg onClick={func_editarComentario(datos.id, datos.Usuario.NombreUsuario, datos.Usuario.ApellidoUsuario)} xmlns="http://www.w3.org/2000/svg" style={{ marginRight: "10px" }} width="28" height="40" fill="currentColor" className="bi bi-pencil" viewBox="0 0 16 16">
+                                                            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
+                                                        </svg>
+                                                    </div>
+                                                    <div className="contenedorBTNBorrar">
+
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="40" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
+                                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                                                        </svg>
+                                                    </div>
                                                 </div>
                                                 <div className="card-header"></div>
                                                 <div className="card-body">
@@ -422,12 +452,36 @@ const DisenoComentarios = ({ idEntrada, func_mostrarComentarios }) => {
 
                                     </div>
                                 </div>
+
+                                {/*  ACA VA IR EL DISEÑO DEL MODAL DE EDITAR EL COMENTARIO */}
+                                <div className="row">
+                                    <div className="col">
+                                        <div className="modal fade" id="modalEditar" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div className="modal-dialog modal-dialog-centered">
+                                                <div className="modal-content disenoModal">
+                                                    <div className="modal-header">
+                                                        <h1 className="modal-title fs-5" id="nombreUsuarioComentario">Hector Restrepo</h1>
+                                                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div className="modal-body">
+                                                        <textarea className="cometarioNuevo" id="inputNuevoComentario" rows="5"></textarea>
+
+                                                    </div>
+                                                    <div className="modal-footer">
+                                                        <button type="button" className="btnCancelarComentario" data-bs-dismiss="modal">Cancelar</button>
+                                                        <button type="button" className="btnGuardarCometario">Guardar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                     </div>
                 </div>
-            </div>
+            </div >
         </>
     );
 }
