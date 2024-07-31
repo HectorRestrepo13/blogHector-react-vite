@@ -30,6 +30,7 @@ const HeaderBlog = () => {
     // -- FIN FUNCION --
 
 
+
     console.log(datosUsuario);
     return (
         <>
@@ -54,7 +55,7 @@ const HeaderBlog = () => {
                                         <img src={imagenPerfil} alt="Perfil" width="80" height="60" className="me-2" />
                                     </button>
                                     <ul className="dropdown-menu">
-                                        <li><a className="dropdown-item" href="#">Ver Perfil</a></li>
+                                        <li><a onClick={() => navigate("/verPerfil")} className="dropdown-item" href="#">Ver Perfil</a></li>
                                         <li><hr className="dropdown-divider" /></li>
                                         <li><a onClick={func_EnviarLogin} className="dropdown-item" href="#">Cerrar Sesión</a></li>
                                     </ul>

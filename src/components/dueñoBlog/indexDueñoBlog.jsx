@@ -2,7 +2,6 @@ import React from 'react';
 import EntradasBlog from './entradasBlog';
 import HeaderBlog from './headerBlog';
 import InsertarEntrada from './insertarEntrada';
-import { useState } from 'react';
 const DueñoBlog = () => {
     // console.log(datosUsuario)
 

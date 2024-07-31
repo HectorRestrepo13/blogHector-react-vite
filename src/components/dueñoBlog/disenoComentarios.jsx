@@ -10,6 +10,7 @@ const DisenoComentarios = ({ idEntrada, func_mostrarComentarios }) => {
     let [jsonComentarios, setJsonComentarios] = useState(null);
     let [insertacionComentario, setInsertacionComentario] = useState(null)
     let [editarComentario, setEditarComentario] = useState(null)
+    let [cedulaUsuario, setCedulaUsuario] = useState(null);
     const [error, setError] = useState(null);
 
     // aca asigno los DOM con el "useRef"
@@ -283,13 +284,41 @@ const DisenoComentarios = ({ idEntrada, func_mostrarComentarios }) => {
             confirmButtonText: "Si, Eliminar!",
             cancelButtonText: "No, Cancelar!",
             reverseButtons: true
-        }).then((result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
-                swalWithBootstrapButtons.fire({
-                    title: "Eliminado!",
-                    text: "Comentario Eliminado con Exito.",
-                    icon: "success"
-                });
+
+                // aca consumo la API para eliminarlo
+
+                let urlEliminarComentario = await fetch(`https://proyectoblog.onrender.com/comentarios/eliminarComentario/${idComentario}`, {
+                    method: "DELETE"
+                })
+
+                if (!urlEliminarComentario.ok) {
+                    throw new Error(`Hubo un error al enviar los Datos a la URL: ${urlEliminarComentario.status}`)
+                }
+
+                let jsonEliminarComentario = await urlEliminarComentario.json();
+
+                console.log(jsonEliminarComentario)
+
+                if (jsonEliminarComentario.status == true) {
+                    swalWithBootstrapButtons.fire({
+                        title: "Eliminado!",
+                        text: "Comentario Eliminado con Exito.",
+                        icon: "success"
+                    }).then(() => {
+                        func_traerDatosComentarios();
+                    })
+                }
+                else {
+                    swalWithBootstrapButtons.fire({
+                        title: "Hubo un Error!",
+                        text: jsonEliminarComentario.descripcion,
+                        icon: "error"
+                    });
+                }
+
+
             } else if (
                 /* Read more about handling dismissals below */
                 result.dismiss === Swal.DismissReason.cancel
@@ -310,6 +339,10 @@ const DisenoComentarios = ({ idEntrada, func_mostrarComentarios }) => {
     // ESTE ES PARA QUE SE INICIE CADA VEZ QUE SE CAMBIA EL ID DE LA ENTRADA ENTONCES SE EJECUTE LA FUNCION
     useEffect(() => {
         func_traerDatosComentarios();
+        let datosLocal = window.localStorage;
+        let cedulaUsuario = JSON.parse(datosLocal.getItem("usuario"));
+        cedulaUsuario = cedulaUsuario.descripcion.CedulaUsuario;
+        setCedulaUsuario(cedulaUsuario)
     }, [idEntrada, insertacionComentario]);
 
     // ESTE POR SI HAY UN ERROR 
@@ -504,18 +537,25 @@ const DisenoComentarios = ({ idEntrada, func_mostrarComentarios }) => {
                                                     <div className="contenedorNombrePerfil">
                                                         <h5 className="card-title">{datos.Usuario.NombreUsuario}</h5>
                                                     </div>
-                                                    <div className="contenedorBTNEditar">
-                                                        <svg onClick={() => func_editarComentario(datos.id, datos.Usuario.NombreUsuario, datos.Usuario.ApellidoUsuario, datos.DescripcionComentario)} xmlns="http://www.w3.org/2000/svg" style={{ marginRight: "10px" }} width="28" height="40" fill="currentColor" className="bi bi-pencil" viewBox="0 0 16 16">
-                                                            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
-                                                        </svg>
-                                                    </div>
-                                                    <div className="contenedorBTNBorrar">
+                                                    {
+                                                        cedulaUsuario == datos.Usuario.CedulaUsuario ? (<>
+                                                            <div className="contenedorBTNEditar">
+                                                                <svg onClick={() => func_editarComentario(datos.id, datos.Usuario.NombreUsuario, datos.Usuario.ApellidoUsuario, datos.DescripcionComentario)} xmlns="http://www.w3.org/2000/svg" style={{ marginRight: "10px" }} width="25" height="40" fill="currentColor" className="bi bi-pencil" viewBox="0 0 16 16">
+                                                                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
+                                                                </svg>
+                                                            </div>
+                                                            <div className="contenedorBTNBorrar">
 
-                                                        <svg onClick={() => func_eliminarComentario(datos.id)} xmlns="http://www.w3.org/2000/svg" width="28" height="40" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
-                                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
-                                                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
-                                                        </svg>
-                                                    </div>
+                                                                <svg onClick={() => func_eliminarComentario(datos.id)} xmlns="http://www.w3.org/2000/svg" width="25" height="40" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
+                                                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                                                                </svg>
+                                                            </div>
+                                                        </>
+
+                                                        ) : (<></>)
+                                                    }
+
                                                 </div>
                                                 <div className="card-header"></div>
                                                 <div className="card-body">

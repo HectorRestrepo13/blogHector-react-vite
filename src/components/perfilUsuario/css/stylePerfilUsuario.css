@@ -1,0 +1,59 @@
+.columnaDatos {
+  margin-top: 25px;
+}
+.contenedorDatos {
+  width: 100%;
+}
+.contenedorBotonGuardar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.iconGuardar {
+  transition: transform 0.8s ease; /* Suaviza la transición del zoom */
+}
+
+.iconAtras {
+  transition: transform 0.8s ease; /* Suaviza la transición del zoom */
+}
+
+.iconGuardar:hover {
+  transform: scale(1.4); /* Aumenta el tamaño de la imagen al 110% */
+}
+.iconAtras:hover {
+  transform: scale(1.4); /* Aumenta el tamaño de la imagen al 110% */
+}
+
+.file-input-wrapper {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+
+.file-input-wrapper input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.file-input-wrapper img {
+  display: block;
+  max-width: 300px; /* Ajusta el tamaño de la imagen según sea necesario */
+  cursor: pointer;
+}
+
+.contenedorImagen {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+.contenedorImagen img {
+  width: 320px;
+  height: 250px;
+  border-radius: 300px;
+  border: solid 1px black;
+}
