@@ -7,7 +7,6 @@ const HeaderBlog = () => {
     const localStore = window.localStorage;
     let datosUsuario = JSON.parse(localStore.getItem('usuario'));
     let imagenPerfil = datosUsuario.descripcion.ImagenUsuario;
-
     let navigate = useNavigate();
 
     // FUNCION PARA ENVIAR AL LOGIN 
@@ -52,7 +51,7 @@ const HeaderBlog = () => {
                             <div className="perfilUsuario">
                                 <div className="btn-group">
                                     <button type="button" className="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <img src={imagenPerfil} alt="Perfil" width="80" height="60" className="me-2" />
+                                        <img src={imagenPerfil != undefined && imagenPerfil != null ? imagenPerfil : "imagenUsuarioSinPerfil.jpg"} alt="Perfil" width="80" height="60" className="me-2" />
                                     </button>
                                     <ul className="dropdown-menu">
                                         <li><a onClick={() => navigate("/verPerfil")} className="dropdown-item" href="#">Ver Perfil</a></li>
