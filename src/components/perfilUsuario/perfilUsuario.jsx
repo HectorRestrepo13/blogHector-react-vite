@@ -67,99 +67,96 @@ const PerfilUsuario = () => {
     // FUNCION PARA EDITAR EL PERFIL CON LA API
 
     const func_EditarPerfil = async () => {
-
         try {
+            setBtnActualizando(true);
 
-            if (inputImagenPerfil.current.files[0] != undefined || inputImagenPerfil.current.files.length != 0) {
+            let urlEditarPerfil;
+            let formData;
 
-                setBtnActualizando(true); // aca le digo que esta en "TRUE" que quiere decir que esta cargando al consumir la API
-                // Crear el objeto FormData
-                let formData = new FormData();
+            if (inputImagenPerfil.current.files.length > 0) {
+                // Hay un archivo
+                formData = new FormData();
                 formData.append("foto", inputImagenPerfil.current.files[0]);
 
-                let urlEditarPerfil = await fetch(`https://proyectoblog.onrender.com/usuario/editarPerfil/?nombre=${inputNombreUsuario.current.value}&apellido=${inputApellidoUsuario.current.value}&correo=${inputEmailUsuario.current.value}&telefono=${inputTelefonoUsuario.current.value}&id=${inputCedulaUsuario.current.value}&verificacionImagen=true`, {
+                urlEditarPerfil = await fetch(`https://proyectoblog.onrender.com/usuario/editarPerfil/?nombre=${inputNombreUsuario.current.value}&apellido=${inputApellidoUsuario.current.value}&correo=${inputEmailUsuario.current.value}&telefono=${inputTelefonoUsuario.current.value}&id=${inputCedulaUsuario.current.value}&verificacionImagen=true`, {
                     method: "PUT",
                     body: formData
                 });
-
-                setBtnActualizando(false);
-
-                if (!urlEditarPerfil.ok) {
-                    throw new Error(`Hubo un error al mandar los datos por la URL: ${urlEditarPerfil.status}`)
-                }
-
-                let jsonEditarPerfil = await urlEditarPerfil.json();
-                console.log(jsonEditarPerfil)
-
-
-            }
-            else {
-
-                setBtnActualizando(true); // aca le digo que esta en "TRUE" que quiere decir que esta cargando al consumir la API
-
-                let urlEditarPerfil = await fetch(`https://proyectoblog.onrender.com/usuario/editarPerfil/?nombre=${inputNombreUsuario.current.value}&apellido=${inputApellidoUsuario.current.value}&correo=${inputEmailUsuario.current.value}&telefono=${inputTelefonoUsuario.current.value}&id=${inputCedulaUsuario.current.value}&verificacionImagen=false`, {
+            } else {
+                // No hay archivo
+                urlEditarPerfil = await fetch(`https://proyectoblog.onrender.com/usuario/editarPerfil/?nombre=${inputNombreUsuario.current.value}&apellido=${inputApellidoUsuario.current.value}&correo=${inputEmailUsuario.current.value}&telefono=${inputTelefonoUsuario.current.value}&id=${inputCedulaUsuario.current.value}&verificacionImagen=false`, {
                     method: "PUT"
                 });
-
-                setBtnActualizando(false);
-
-                if (!urlEditarPerfil.ok) {
-                    throw new Error(`Hubo un error al mandar los datos por la URL: ${urlEditarPerfil.status}`)
-                }
-
-                let jsonEditarPerfil = await urlEditarPerfil.json();
-                let actualizacionLocal = await func_enviarNuevosDatosLocalStore();
-                if (actualizacionLocal) {
-                    console.log("bien")
-
-                    setBtnActualizando(false)
-
-                }
-                console.log(jsonEditarPerfil)
-
             }
 
+            setBtnActualizando(false);
 
+            if (!urlEditarPerfil.ok) {
+                throw new Error(`Error al enviar datos: ${urlEditarPerfil.status}`);
+            }
 
+            let jsonEditarPerfil = await urlEditarPerfil.json();
+            console.log(jsonEditarPerfil);
 
+            if (jsonEditarPerfil.status === true) {
+                let respuesta = await fetch(`https://proyectoblog.onrender.com/usuario/selecionarUsuarioCedula/${jsonEditarPerfil.data.CedulaUsuario}`);
+                if (!respuesta.ok) {
+                    throw new Error(`Error al obtener datos: ${respuesta.status}`);
+                }
+                respuesta = await respuesta.json();
+
+                if (respuesta.status === true) {
+                    // Guardar datos en LocalStorage y notificar éxito
+                    window.localStorage.setItem("usuario", JSON.stringify(respuesta));
+                    Swal.fire({
+                        icon: "success",
+                        title: jsonEditarPerfil.descripcion,
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true
+                    });
+                } else {
+                    // Manejar error en la obtención de datos del usuario
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error al guardar datos en LocalStorage",
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true
+                    });
+                }
+            } else {
+                // Manejar error en la respuesta de editar perfil
+                Swal.fire({
+                    icon: "error",
+                    title: jsonEditarPerfil.descripcion,
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true
+                });
+            }
         } catch (error) {
-            console.log(`Hubo un error: ${error}`)
+            console.log(`Hubo un error en la API: ${error}`);
+            setBtnActualizando(false);
+            Swal.fire({
+                icon: "error",
+                title: "Error en la API",
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });
         }
-    }
-
+    };
     // -- FIN FUNCION --
 
-
-    // FUNCION PARA OBTENER LOS DATOS DEL USUARIO Y MANDAR LOS NUEVOS DATOS AL LOCALSTORE
-
-    const func_enviarNuevosDatosLocalStore = async (cedula) => {
-        try {
-            let respuesta = await fetch(`https://proyectoblog.onrender.com/usuario/selecionarUsuarioCedula/${cedula}`);
-            if (!respuesta.ok) {
-                throw new Error("Hubo un error al enviar los datos al http Revisar " + respuesta.status)
-            }
-            respuesta = await respuesta.json();
-
-            if (respuesta.status == true) {
-
-                // ACA VOY A METER LOS DATOS EN EL LOCALSTORE Y DIRIJIRLO A OTRA PAGINA
-                let local = window.localStorage;
-                local.setItem("usuario", JSON.stringify(respuesta));
-                return true;
-            }
-            else {
-                return false;
-
-            }
-
-        } catch (error) {
-            console.log(error)
-            return false
-        }
-
-    }
-
-    // -- FIN FUNCION --
 
     return (
         <>

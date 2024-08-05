@@ -27,9 +27,15 @@ header {
   border-radius: 20px;
 }
 
-.perfilUsuario {
-  margin-left: auto;
-}
 .perfilUsuario img {
   border-radius: 70px;
+}
+
+.perfilUsuarioNombre {
+  margin-left: auto;
+}
+
+.perfilUsuarioNombre p {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 19px;
 }

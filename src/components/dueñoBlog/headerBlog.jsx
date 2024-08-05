@@ -7,6 +7,7 @@ const HeaderBlog = () => {
     const localStore = window.localStorage;
     let datosUsuario = JSON.parse(localStore.getItem('usuario'));
     let imagenPerfil = datosUsuario.descripcion.ImagenUsuario;
+    let nombreUsuario = datosUsuario.descripcion.NombreUsuario;
     let navigate = useNavigate();
 
     // FUNCION PARA ENVIAR AL LOGIN 
@@ -28,9 +29,6 @@ const HeaderBlog = () => {
     }
     // -- FIN FUNCION --
 
-
-
-    console.log(datosUsuario);
     return (
         <>
             <header className="bg-dark text-white py-3">
@@ -48,6 +46,10 @@ const HeaderBlog = () => {
                                 <input className="form-control me-2" type="search" placeholder="Buscar Entrada" aria-label="Search" />
                                 <button className="btn btn-outline-light" type="submit">Buscar</button>
                             </form>
+
+                            <div className="perfilUsuarioNombre">
+                                <p>{nombreUsuario}</p>
+                            </div>
                             <div className="perfilUsuario">
                                 <div className="btn-group">
                                     <button type="button" className="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -60,6 +62,7 @@ const HeaderBlog = () => {
                                     </ul>
                                 </div>
                             </div>
+
                         </div>
                     </nav>
                 </div>

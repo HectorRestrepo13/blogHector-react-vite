@@ -16,7 +16,7 @@ const EntradasBlog = () => {
                 let response = await fetch("https://proyectoblog.onrender.com/entradas/traerTodasLasEntradas/");
                 response = await response.json();
                 if (response.status === true) {
-                    console.log(response.descripcion)
+
                     setJsonDatosEntradas(response.descripcion);
                 } else {
                     console.log(response.error);
