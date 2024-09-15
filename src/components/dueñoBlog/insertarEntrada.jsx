@@ -34,8 +34,7 @@ const InsertarEntrada = () => {
 
         if (descripcionEntrada != "") {
 
-
-            if (imagenEntrada != "") {
+            if (imagenEntrada != undefined) {
 
                 if (tituloEntrada != "") {
                     try {
@@ -52,7 +51,7 @@ const InsertarEntrada = () => {
                         let idBlog = local.descripcion.blogs[0].id;
                         const formData = new FormData();
                         formData.append("imagenEntrada", imagenEntrada)
-                        let responseHttp = await fetch(`https://proyectoblog.onrender.com/entradas/insertarEntrada/?TituloEntrada=${tituloEntrada}&ContenidoEntrada=${descripcionEntrada}&FechaCreacion=${fechaActual}&BlogId=${idBlog}`, {
+                        let responseHttp = await fetch(`http://localhost:3000/entradas/insertarEntrada/?TituloEntrada=${tituloEntrada}&ContenidoEntrada=${descripcionEntrada}&FechaCreacion=${fechaActual}&BlogId=${idBlog}`, {
                             method: "POST",
                             body: formData
                         })

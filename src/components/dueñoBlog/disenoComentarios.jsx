@@ -26,7 +26,7 @@ const DisenoComentarios = ({ idEntrada, func_mostrarComentarios }) => {
         try {
 
 
-            let comentariosApi = await fetch(`https://proyectoblog.onrender.com/comentarios/selecionarComentarios/${idEntrada}`);
+            let comentariosApi = await fetch(`http://localhost:3000/comentarios/selecionarComentarios/${idEntrada}`);
 
             if (!comentariosApi.ok) {
                 throw new Error(`Hubo un error al Consumir la APi de los comentarios Verificar: ${comentariosApi.status}`)
@@ -85,7 +85,7 @@ const DisenoComentarios = ({ idEntrada, func_mostrarComentarios }) => {
                     EntradaId: idEntrada
                 }
                 setInsertacionComentario("procesando insertacion")
-                let insertarComentario = await fetch("https://proyectoblog.onrender.com/comentarios/insertarComentario/", {
+                let insertarComentario = await fetch("http://localhost:3000/comentarios/insertarComentario/", {
                     method: "POST",
                     headers: {
                         'Content-Type': 'application/json', // Tipo de contenido
@@ -203,7 +203,7 @@ const DisenoComentarios = ({ idEntrada, func_mostrarComentarios }) => {
                         idComentario: idComentarioRef.current.value
                     }
                     setEditarComentario("cargando")
-                    let urlEditarComentario = await fetch(`https://proyectoblog.onrender.com/comentarios/editarComentario/`,
+                    let urlEditarComentario = await fetch(`http://localhost:3000/comentarios/editarComentario/`,
                         {
                             method: "PUT",
                             headers: {
@@ -289,7 +289,7 @@ const DisenoComentarios = ({ idEntrada, func_mostrarComentarios }) => {
 
                 // aca consumo la API para eliminarlo
 
-                let urlEliminarComentario = await fetch(`https://proyectoblog.onrender.com/comentarios/eliminarComentario/${idComentario}`, {
+                let urlEliminarComentario = await fetch(`http://localhost:3000/comentarios/eliminarComentario/${idComentario}`, {
                     method: "DELETE"
                 })
 
@@ -526,6 +526,9 @@ const DisenoComentarios = ({ idEntrada, func_mostrarComentarios }) => {
                         <div className="datosEntrada">
                             {/* aca van a ir los comentarios */}
                             <div className="container">
+                                {
+                                    console.log(jsonComentarios.datos)
+                                }
                                 {jsonComentarios.datos && jsonComentarios.datos.length > 0 ? (jsonComentarios.datos.map((datos) => (
                                     <div className="row" key={datos.id}>
                                         <div className="col">
@@ -536,6 +539,12 @@ const DisenoComentarios = ({ idEntrada, func_mostrarComentarios }) => {
                                                     </div>
                                                     <div className="contenedorNombrePerfil">
                                                         <h5 className="card-title">{datos.Usuario.NombreUsuario}</h5>
+                                                        <p style={{ marginLeft: "10px" }}>{new Date(new Date("2024-09-13T00:00:00.000Z").setDate(new Date("2024-09-13T00:00:00.000Z").getDate() + 1))
+                                                            .toLocaleDateString("es-ES", {
+                                                                day: '2-digit',
+                                                                month: '2-digit',
+                                                                year: 'numeric'
+                                                            })}</p>
                                                     </div>
                                                     {
                                                         cedulaUsuario == datos.Usuario.CedulaUsuario ? (<>

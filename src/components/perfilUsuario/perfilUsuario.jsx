@@ -78,13 +78,13 @@ const PerfilUsuario = () => {
                 formData = new FormData();
                 formData.append("foto", inputImagenPerfil.current.files[0]);
 
-                urlEditarPerfil = await fetch(`https://proyectoblog.onrender.com/usuario/editarPerfil/?nombre=${inputNombreUsuario.current.value}&apellido=${inputApellidoUsuario.current.value}&correo=${inputEmailUsuario.current.value}&telefono=${inputTelefonoUsuario.current.value}&id=${inputCedulaUsuario.current.value}&verificacionImagen=true`, {
+                urlEditarPerfil = await fetch(`http://localhost:3000/usuario/editarPerfil/?nombre=${inputNombreUsuario.current.value}&apellido=${inputApellidoUsuario.current.value}&correo=${inputEmailUsuario.current.value}&telefono=${inputTelefonoUsuario.current.value}&id=${inputCedulaUsuario.current.value}&verificacionImagen=true`, {
                     method: "PUT",
                     body: formData
                 });
             } else {
                 // No hay archivo
-                urlEditarPerfil = await fetch(`https://proyectoblog.onrender.com/usuario/editarPerfil/?nombre=${inputNombreUsuario.current.value}&apellido=${inputApellidoUsuario.current.value}&correo=${inputEmailUsuario.current.value}&telefono=${inputTelefonoUsuario.current.value}&id=${inputCedulaUsuario.current.value}&verificacionImagen=false`, {
+                urlEditarPerfil = await fetch(`http://localhost:3000/usuario/editarPerfil/?nombre=${inputNombreUsuario.current.value}&apellido=${inputApellidoUsuario.current.value}&correo=${inputEmailUsuario.current.value}&telefono=${inputTelefonoUsuario.current.value}&id=${inputCedulaUsuario.current.value}&verificacionImagen=false`, {
                     method: "PUT"
                 });
             }
@@ -99,7 +99,7 @@ const PerfilUsuario = () => {
             console.log(jsonEditarPerfil);
 
             if (jsonEditarPerfil.status === true) {
-                let respuesta = await fetch(`https://proyectoblog.onrender.com/usuario/selecionarUsuarioCedula/${jsonEditarPerfil.data.CedulaUsuario}`);
+                let respuesta = await fetch(`http://localhost:3000/usuario/selecionarUsuarioCedula/${jsonEditarPerfil.data.CedulaUsuario}`);
                 if (!respuesta.ok) {
                     throw new Error(`Error al obtener datos: ${respuesta.status}`);
                 }

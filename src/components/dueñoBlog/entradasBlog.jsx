@@ -4,16 +4,16 @@ import DisenoComentarios from './disenoComentarios';
 
 
 
-const EntradasBlog = () => {
-    const [jsonDatosEntradas, setJsonDatosEntradas] = useState([]);
-    const [loading, setLoading] = useState(true);
+const EntradasBlog = ({ jsonDatosEntradas, setJsonDatosEntradas, setLoading, loading }) => {
     const [mostrarComentarios, setMostrarComentarios] = useState(null);
 
     // USO DEL "useEffect" PARA QUE SE EJECUTE UNA VEZ SE CARGUE LA PAGINA 
     useEffect(() => {
+
+        // funcion para traer todas las entradas 
         const fetchEntradas = async () => {
             try {
-                let response = await fetch("https://proyectoblog.onrender.com/entradas/traerTodasLasEntradas/");
+                let response = await fetch("http://localhost:3000/entradas/traerTodasLasEntradas/");
                 response = await response.json();
                 if (response.status === true) {
 
@@ -59,6 +59,9 @@ const EntradasBlog = () => {
 
     // -- FIN FUNCION --
 
+
+
+
     return (
         <>
             {loading ? (
@@ -77,7 +80,7 @@ const EntradasBlog = () => {
                                     <span className="vtimeline-date">{fechaFormateada}</span>
                                     <div className="vtimeline-content">
                                         <div className="datosEntrada">
-                                            <a href="#"><img style={{ height: "300px", width: "100%" }} src={entrada.UrlImagenEntrada != null ? entrada.UrlImagenEntrada : "sinFoto.jpg"} alt={entrada.TituloEntrada} className="img-fluid mb20" /></a>
+                                            <a href="#"><img style={{ height: "300px", width: "100%", objectFit: "cover" }} src={entrada.UrlImagenEntrada != null ? entrada.UrlImagenEntrada : "sinFoto.jpg"} alt={entrada.TituloEntrada} className="img-fluid mb20" /></a>
                                             <a href="#"><h3>{entrada.TituloEntrada}</h3></a>
                                             <ul className="post-meta list-inline">
                                                 <li className="list-inline-item">
